@@ -1,0 +1,10 @@
+# This repository is public. Working notes, and the old copies of files that
+# were replaced, stay on your machine.
+NOTES.local.md
+*_old.*
+
+# Operating system and editor clutter
+.DS_Store
+Thumbs.db
+desktop.ini
+.vscode/

@@ -1,0 +1,26 @@
+# bzgrid.com on Netlify. The site is plain HTML in site/: there is nothing to
+# build, so every push to main publishes that folder as it is.
+
+[build]
+  publish = "site"
+
+# Security headers for every page. The site runs no scripts (the one <script>
+# is JSON-LD data, which a CSP does not block) and loads nothing from another
+# host, so the policy allows only its own styles, fonts and images (plus the
+# data: SVG ticks in the stylesheet).
+[[headers]]
+  for = "/*"
+  [headers.values]
+    Content-Security-Policy = "default-src 'none'; style-src 'self'; font-src 'self'; img-src 'self' data:; base-uri 'none'; form-action 'none'; frame-ancestors 'none'"
+    X-Content-Type-Options = "nosniff"
+    X-Frame-Options = "DENY"
+    Referrer-Policy = "strict-origin-when-cross-origin"
+    Permissions-Policy = "camera=(), microphone=(), geolocation=(), payment=()"
+
+# The fonts never change under the same name, so browsers may keep them a year.
+# Everything else keeps Netlify's default (revalidate on every visit), because
+# site.css and the images are not renamed when they change.
+[[headers]]
+  for = "/assets/fonts/*"
+  [headers.values]
+    Cache-Control = "public, max-age=31536000, immutable"
